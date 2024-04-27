@@ -35,12 +35,21 @@ public static class ArraysTester {
     private static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // The function will be built for a double[] which is an array
+        // You will start with initializing the doubles array and set the length into an array variable
+        // After this you'll want to create a loop that will run through the length that was set
+        // In the loop you'll set the numbers into the array created. 
+        // Once the loop has completed, you'll return the array. 
 
-        return new double[0]; // replace this return statement with your own
-    }
+        double[] multiples = new double[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            multiples[i] = number * (i + 1);
+        }
+
+        return multiples; // replace this return statement with your own
+    } // I believe this would be a big O notation of O(n)
     
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -53,9 +62,24 @@ public static class ArraysTester {
     private static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // First we'll want to calculate whether the desired amount is within range using amount % data.Count and put in a variable
+        // Next determine where we're going to split the list based on the amount passed in using data.Count - amount and put in a variable
+        // Then we'll get the left and right sides using data.GetRange, (split, amount) for left, and (0, split) for right 
+        // Then we'll remove the list starting from the first number or index 0 and the whole length using data.RemoveRange
+        // Then we'll add the left side and right side back in using data.AddRange
 
+        amount = amount % data.Count;
+
+        int split = data.Count - amount;
+
+        List<int> leftSide = data.GetRange(split, amount);
+        List<int> rightSide = data.GetRange(0, split);
+
+        data.RemoveRange(0, data.Count);
+
+        data.AddRange(leftSide);
+        data.AddRange(rightSide);
+      
+        // I believe the big O notation on this would be O(n)
     }
 }
