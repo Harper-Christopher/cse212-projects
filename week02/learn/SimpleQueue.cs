@@ -7,10 +7,10 @@
         // Expected Result: It should display 100
         Console.WriteLine("Test 1");
         var queue = new SimpleQueue();
-        queue.Enqueue(100);
-        var value = queue.Dequeue();
+        queue.Enqueue(100); // 100
+        var value = queue.Dequeue(); 
         Console.WriteLine(value);
-        // Defect(s) Found:
+        // Defect(s) Found: Removing from the second number or index 1. Should be first number, index 0
 
         Console.WriteLine("------------");
 
@@ -19,16 +19,16 @@
         // Expected Result: It should display 200, then 300, then 400 in that order
         Console.WriteLine("Test 2");
         queue = new SimpleQueue();
-        queue.Enqueue(200);
-        queue.Enqueue(300);
-        queue.Enqueue(400);
-        value = queue.Dequeue();
+        queue.Enqueue(200); // 200
+        queue.Enqueue(300); // 200, 300
+        queue.Enqueue(400); // 200, 300, 400
+        value = queue.Dequeue(); // 300, 400
         Console.WriteLine(value);
-        value = queue.Dequeue();
+        value = queue.Dequeue(); // 400
         Console.WriteLine(value);
-        value = queue.Dequeue();
+        value = queue.Dequeue(); // N/A
         Console.WriteLine(value);
-        // Defect(s) Found: 
+        // Defect(s) Found: Enqueue was adding to the front each time(Not a queue)
 
         Console.WriteLine("------------");
 
@@ -44,7 +44,7 @@
         catch (IndexOutOfRangeException) {
             Console.WriteLine("I got the exception as expected.");
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: None
     }
 
     private readonly List<int> _queue = new();
@@ -54,7 +54,9 @@
     /// </summary>
     /// <param name="value">Integer value to add to the queue</param>
     private void Enqueue(int value) {
-        _queue.Insert(0, value);
+        // This is adding the value variable in the front using index 0
+        // _queue.Insert(0, value);
+        _queue.Add(value);
     }
 
     /// <summary>
@@ -66,8 +68,13 @@
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        // This is removing the second value, not the first which is index 0
+        // var value = _queue[1];
+        // _queue.RemoveAt(1);
+
+        var value = _queue[0];
+        _queue.RemoveAt(0);
         return value;
     }
+    
 }
