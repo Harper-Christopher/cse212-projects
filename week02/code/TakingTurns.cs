@@ -12,10 +12,12 @@
         players.AddPerson("Bob", 2);
         players.AddPerson("Tim", 5);
         players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);    // This can be un-commented out for debug help
+        Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+        // Defect(s) Found: Using the debug, I found the enqueue was adding the person back to the front of the line. 
+        // The enqueue function was using an insert, which was using index 0, placing the person back at the front of the line.
+        // Using Add(person) will put them in the back of the line again once they've been dequeued. 
 
         Console.WriteLine("---------");
 
@@ -38,7 +40,7 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: Same as test 1
 
         Console.WriteLine("---------");
 
@@ -56,7 +58,8 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: GetNextPerson handle when tim was at 0, so he only got one turn.
+        // Used if statement for 0 to add to the queue. Then set if statement for 1, to ensure it's their last turn.
 
         Console.WriteLine("---------");
 
@@ -73,7 +76,7 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Changed the if statement from 0 add to the queue to <= 0.
 
         Console.WriteLine("---------");
 
@@ -83,6 +86,6 @@
         Console.WriteLine("Test 5");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
-        // Defect(s) Found:
+        // Defect(s) Found: None
     }
 }
