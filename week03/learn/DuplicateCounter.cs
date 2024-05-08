@@ -1,4 +1,7 @@
-﻿public class DuplicateCounter
+﻿using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
+
+public class DuplicateCounter
 {
     //Count how many duplicates are in a collection of data.
 
@@ -24,7 +27,17 @@
 
     private static int CountDuplicates(int[] data)
     {
-        // Add code here.
-        return 0;
+        var duplicateDelete = new HashSet<int>();
+        var duplicateCount = 0;
+
+        foreach (var numbers in data)
+        {
+            if (duplicateDelete.Contains(numbers))
+                duplicateCount++;
+            else
+                duplicateDelete.Add(numbers);
+        }
+
+        return duplicateCount;
     }
 }
