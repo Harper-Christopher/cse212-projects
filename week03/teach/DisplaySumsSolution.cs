@@ -34,7 +34,7 @@
     private static void DisplaySumPairs(int[] numbers)
     {
         var valuesSeen = new HashSet<int>();
-        foreach (var n in numbers)
+        foreach (var n in numbers)   
         {
             // If 10-n is in the values_seen set then I know that
             // I have previously seen a number that will sum with n 

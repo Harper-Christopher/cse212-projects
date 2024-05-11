@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 public static class SetsAndMapsTester {
@@ -25,6 +26,7 @@ public static class SetsAndMapsTester {
         // 32 & 23
         // 94 & 49
         // 31 & 13
+
 
         // Problem 2: Degree Summary
         // Sample Test Cases (may not be comprehensive) 
@@ -111,6 +113,21 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+
+        HashSet<string> wordSet = new HashSet<string>(words);
+        HashSet<string> newPair = new HashSet<string>();
+
+        foreach (string word in words)
+        {
+            string pair = new string(word.Reverse().ToArray());
+            if (wordSet.Contains(pair) && word != pair)
+            {
+                Console.WriteLine($"{word} & {pair}");
+            }
+
+            wordSet.Add(word);
+
+        }
     }
 
     /// <summary>
@@ -131,7 +148,21 @@ public static class SetsAndMapsTester {
         var degrees = new Dictionary<string, int>();
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
+            
+            if (fields.Length >= 4) 
+            {
+                string degree = fields[3];
+
+                if (degrees.ContainsKey(degree))
+                {
+                    degrees[degree]++;
+                }
+                
+                else 
+                {
+                    degrees[degree] = 1; 
+                }
+            }
         }
 
         return degrees;
@@ -157,8 +188,48 @@ public static class SetsAndMapsTester {
     /// # Problem 3 #
     /// #############
     private static bool IsAnagram(string word1, string word2) {
-        // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        //When determining if two words are anagrams, you should ignore any spaces.
+        //You should ignore letter case. For example, 'Ab' and 'bA' should be considered anagrams.
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        // This works, but doesn't use the dictionary format. https://stackoverflow.com/questions/32778070/how-can-check-anagram-strings-in-c-sharp
+        // return word1.OrderBy(c => c).SequenceEqual(word2.OrderBy(c => c));
+
+        if (word1.Length != word2.Length)
+        {
+            return false;
+        }
+
+        Dictionary<char, int> checker = new Dictionary<char, int>();
+
+        for (int i = 0; i < word1.Length; i++)
+        {
+            //Reminder: You can access a letter by index in a string by using the myString[3] notation.
+            char words1 = word1[i];
+            char words2 = word2[i];
+
+            if (!checker.ContainsKey(words1))
+            {
+                checker[words1] = 0;
+            }
+            checker[words1]++;
+
+            if (!checker.ContainsKey(words2))
+            {
+                checker[words2] = 0;
+            }
+            checker[words2]--;
+        }
+
+        foreach (int count in checker.Values)
+        {
+            if (count != 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
@@ -235,5 +306,9 @@ public static class SetsAndMapsTester {
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach (var feature in featureCollection.Features)
+        {
+            Console.WriteLine($"{feature.Properties.Place} - Mag {feature.Properties.Mag:F2}");
+        }
     }
 }

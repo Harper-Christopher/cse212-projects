@@ -1,4 +1,6 @@
+//https://stackoverflow.com/questions/63361473/deserialize-json-usgs-earthquake-catalog-api
+using System.Text.Json.Serialization;
+
 public class FeatureCollection {
-    // Todo Earthquake Problem - ADD YOUR CODE HERE
-    // Create additional classes as necessary
+    public Feature[] Features {get; set;}
 }
