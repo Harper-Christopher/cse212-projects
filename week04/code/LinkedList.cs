@@ -136,6 +136,8 @@ public class LinkedList : IEnumerable<int> {
 
                 else 
                 {
+                    curr.Prev!.Next = curr.Next;
+                    curr.Next!.Prev = curr.Prev;
                     return;
                 }
             }
